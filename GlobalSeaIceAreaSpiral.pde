@@ -21,10 +21,20 @@ void setup() {
   background(100);
   fill(60,0,60);
   ellipse(_halfWidth, _halfHeight, 850, 850);
-  fill(255);
-	stroke(255);
-  strokeWeight(4);
   
+  noFill();
+  stroke(255);
+  strokeWeight(2);
+  ellipse(_halfWidth, _halfHeight, 18 * 20 * 2, 18 * 20 * 2);
+  ellipse(_halfWidth, _halfHeight, 18 * 15 * 2, 18 * 15 * 2);
+  ellipse(_halfWidth, _halfHeight, 18 * 10 * 2, 18 * 10 * 2);
+  fill(255);
+  textSize(15);
+  text("20M Km²",_halfWidth - 30, _halfHeight - 18 * 20 - 10);
+  text("15M Km²",_halfWidth - 30, _halfHeight - 18 * 15 - 10);
+  text("10M Km²",_halfWidth - 30, _halfHeight - 18 * 10 - 10);
+  
+  strokeWeight(4);
   //line(0,_halfHeight, _width, _halfHeight);
   //line(_halfWidth, 0, _halfWidth, _height);
   
