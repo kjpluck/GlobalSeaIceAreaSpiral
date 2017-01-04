@@ -49,7 +49,7 @@ void setup() {
 boolean _drawLine = false;
 int _lastX = 0;
 int _lastY = 0;
-int _skip = 20;
+int _skip = 60;
 
 void draw(){
   
