@@ -15,30 +15,41 @@ int _halfWidth = _width/2;
 int _halfHeight = _height/2;
 
 
+boolean _drawLine = false;
+boolean _drawRecordLow = false;
+int _lastX = 0;
+int _lastY = 0;
+int _lastXNH = 0;
+int _lastYNH = 0;
+int _lastXSH = 0;
+int _lastYSH = 0;
+int _skip = 10;
+float _currentLow = Float.MAX_VALUE;
+
+
+
+
 void setup() {
 	size(1000, 1000);
   strokeWeight(4);
   
   frameRate(30);
+    
 	_seaIceData = filterFile();
 
-  
-  videoExport = new VideoExport(this);
-  videoExport.setFrameRate(30);
-  videoExport.startMovie();
+    
+  //videoExport = new VideoExport(this);
+  //videoExport.setFrameRate(30);
+  //videoExport.startMovie();
 }
-
-boolean _drawLine = false;
-boolean _drawRecordLow = false; //<>//
-int _lastX = 0;
-int _lastY = 0;
-int _skip = 60;
-float _currentLow = Float.MAX_VALUE;
-
 
 void drawBackground()
 {
   background(100);
+  
+  
+  strokeCap(SQUARE);
+  
   noStroke();
   fill(70,0,70);
   ellipse(_halfWidth, _halfHeight, 850, 850);
@@ -89,7 +100,7 @@ void draw(){
     String[] seaIceDatum = split(_seaIceData.get(c), ',');
     
     String[] dateTime = split(seaIceDatum[0], '-');
-     //<>//
+    
     
     _year = int(dateTime[0]);
     int yearDay = int(trim(split(seaIceDatum[1],'.')[0]));
@@ -102,12 +113,21 @@ void draw(){
     
     int daysInYear = 365;
         
-    float area = float(seaIceDatum[3]);
+    float area = float(seaIceDatum[3]) + float(seaIceDatum[5]);
+    float areaNH = float(seaIceDatum[3]);
+    float areaSH = float(seaIceDatum[5]);
+    
     
     if(_year % 4 == 0) daysInYear = 366;
     
     int x = int(18 * area * cos(TWO_PI *  yearDay/daysInYear - HALF_PI));
     int y = int(18 * area * sin(TWO_PI *  yearDay/daysInYear - HALF_PI));
+    
+    int xNH = int(18 * areaNH * cos(TWO_PI *  yearDay/daysInYear - HALF_PI));
+    int yNH = int(18 * areaNH * sin(TWO_PI *  yearDay/daysInYear - HALF_PI));
+    
+    int xSH = int(18 * areaSH * cos(TWO_PI *  yearDay/daysInYear - HALF_PI));
+    int ySH = int(18 * areaSH * sin(TWO_PI *  yearDay/daysInYear - HALF_PI));
     
     if(x==0 && y==0)
     {
@@ -121,10 +141,32 @@ void draw(){
       stroke(lerpColor(purple, red, lerp));
       strokeWeight(4);
       line(500 + _lastX, 500 + _lastY, 500 + x, 500 + y);
+      
+      //if(_end - c < 100)
+      {  
+        //stroke(1.0,1.0,1.0,0.0);
+        stroke(255,255,255,16);
+        strokeWeight(2);
+        line(500 + _lastXNH, 500 + _lastYNH, 500 + xNH, 500 + yNH);
+        line(500 + _lastXSH, 500 + _lastYSH, 500 + xSH, 500 + ySH);
+      }
+      
+      if(_end - c < 25)
+      {  
+        //stroke(1.0,1.0,1.0,0.0);
+        stroke(255,255,255, 127);
+        strokeWeight(2);
+        line(500 + _lastXNH, 500 + _lastYNH, 500 + xNH, 500 + yNH);
+        line(500 + _lastXSH, 500 + _lastYSH, 500 + xSH, 500 + ySH);
+      } //<>//
     }
     
     _lastX = x;
     _lastY = y;
+    _lastXNH = xNH;
+    _lastYNH = yNH;
+    _lastXSH = xSH;
+    _lastYSH = ySH;
     _drawLine = true;
     
     
@@ -139,6 +181,7 @@ void draw(){
     }
   }
     
+  
   if(_drawRecordLow)
   {
     noFill();
@@ -163,12 +206,12 @@ void draw(){
   fill(255);
   text(_year, 460, 510);
   _drawLine = false;
-  videoExport.saveFrame();
+  //videoExport.saveFrame();
 }
 
 void keyPressed() {
   if (key == 'q') {
-    videoExport.endMovie();
+    //videoExport.endMovie();
     exit();
   }
 }
@@ -176,7 +219,7 @@ void keyPressed() {
 StringList filterFile()
 {
 	StringList toReturn = new StringList();
-  String[] lines = loadStrings("nsidc_global_nt_final_and_nrt.txt");
+  String[] lines = loadStrings("nsidc_NH_SH_nt_final_and_nrt.txt");
   
 	for (String line : lines) {
 	  if(line.charAt(0) == '#' || line.charAt(0) == ' ') continue;
