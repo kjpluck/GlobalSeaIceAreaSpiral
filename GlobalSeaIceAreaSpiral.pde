@@ -65,7 +65,7 @@ void drawBackground()
   fill(70,0,70);
   ellipse(_halfWidth, _halfHeight, 17.8 *  5 * 2, 17.8 *  5 * 2);
   
-  fill(60,0,60);
+  fill(255,255,255);
   ellipse(_halfWidth, _halfHeight, 17.8 * .2 * 2, 17.8 * .2 * 2);
   
   fill(255);
@@ -203,6 +203,10 @@ void draw(){
       
     translate(-_halfWidth, -_halfHeight);
   }
+  
+  stroke(255,255,255,48);
+  strokeWeight(1);
+  line(500,500,_lastX+500,_lastY+500);
   
   textSize(32);
   stroke(255);
