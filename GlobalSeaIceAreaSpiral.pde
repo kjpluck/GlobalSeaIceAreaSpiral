@@ -38,9 +38,9 @@ void setup() {
 	_seaIceData = filterFile();
 
     
-  //videoExport = new VideoExport(this);
-  //videoExport.setFrameRate(30);
-  //videoExport.startMovie();
+  videoExport = new VideoExport(this);
+  videoExport.setFrameRate(30);
+  videoExport.startMovie();
 }
 
 void drawBackground()
@@ -62,6 +62,11 @@ void drawBackground()
   ellipse(_halfWidth, _halfHeight, 17.8 * 15 * 2, 17.8 * 15 * 2);
   fill(60,0,60);
   ellipse(_halfWidth, _halfHeight, 17.8 * 10 * 2, 17.8 * 10 * 2);
+  fill(70,0,70);
+  ellipse(_halfWidth, _halfHeight, 17.8 *  5 * 2, 17.8 *  5 * 2);
+  
+  fill(60,0,60);
+  ellipse(_halfWidth, _halfHeight, 17.8 * .2 * 2, 17.8 * .2 * 2);
   
   fill(255);
   textSize(15);
@@ -69,6 +74,8 @@ void drawBackground()
   text("15M Km²",_halfWidth - 30, _halfHeight - 17.8 * 15 + 20);
   text("10M Km²",_halfWidth - 30, _halfHeight - 17.8 * 10 + 20);
   
+  text("Arctic", 600, 400);
+  text("Antarctic", 300, 600);
   
   textSize(20);
   text("Global Sea Ice Area 1978 - 2017", 10, 30);
@@ -139,25 +146,21 @@ void draw(){
     {
       float lerp = float(_year-1978)/float(2016-1978);
       stroke(lerpColor(purple, red, lerp));
-      strokeWeight(4);
-      line(500 + _lastX, 500 + _lastY, 500 + x, 500 + y);
+      drawGlobal(x,y);
       
-      //if(_end - c < 100)
-      {  
-        //stroke(1.0,1.0,1.0,0.0);
-        stroke(255,255,255,16);
-        strokeWeight(2);
-        line(500 + _lastXNH, 500 + _lastYNH, 500 + xNH, 500 + yNH);
-        line(500 + _lastXSH, 500 + _lastYSH, 500 + xSH, 500 + ySH);
-      }
+      stroke(255,255,255,16);
+      drawNH(xNH,yNH);
+      drawSH(xSH,ySH);
       
-      if(_end - c < 25)
+      int distanceFromEnd = _end - c;
+      if(distanceFromEnd < 25)
       {  
-        //stroke(1.0,1.0,1.0,0.0);
-        stroke(255,255,255, 127);
-        strokeWeight(2);
-        line(500 + _lastXNH, 500 + _lastYNH, 500 + xNH, 500 + yNH);
-        line(500 + _lastXSH, 500 + _lastYSH, 500 + xSH, 500 + ySH);
+        for(int count = 0; count < (25 - distanceFromEnd); count++)
+        {
+          drawGlobal(x,y);
+          drawNH(xNH,yNH);
+          drawSH(xSH,ySH);
+        }
       } //<>//
     }
     
@@ -204,16 +207,34 @@ void draw(){
   textSize(32);
   stroke(255);
   fill(255);
-  text(_year, 460, 510);
+  text(_year, 460, 120);
   _drawLine = false;
-  //videoExport.saveFrame();
+  videoExport.saveFrame();
 }
 
 void keyPressed() {
   if (key == 'q') {
-    //videoExport.endMovie();
+    videoExport.endMovie();
     exit();
   }
+}
+
+void drawGlobal(int x, int y){
+  strokeCap(ROUND);
+  strokeWeight(4);
+  line(500 + _lastX, 500 + _lastY, 500 + x, 500 + y);
+}
+
+void drawNH(int xNH, int yNH){
+  strokeCap(SQUARE);
+  strokeWeight(2);
+  line(500 + _lastXNH, 500 + _lastYNH, 500 + xNH, 500 + yNH);
+}
+
+void drawSH(int xSH, int ySH){
+  strokeCap(SQUARE);
+  strokeWeight(2);
+  line(500 + _lastXSH, 500 + _lastYSH, 500 + xSH, 500 + ySH);
 }
 
 StringList filterFile()
