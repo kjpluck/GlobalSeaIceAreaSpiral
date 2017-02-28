@@ -1,2 +1,6 @@
 *.mp4
 ffmpeg.txt
+*.png
+*.gif
+nsidc*nrt.txt
+

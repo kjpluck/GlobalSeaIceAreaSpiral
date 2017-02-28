@@ -74,15 +74,20 @@ void drawBackground()
 int _end = 0;
 int _year = 0;
 float _angleOfRecord = 0.0;
+int _endPauseFrameCount = 0;
 void draw(){
   
   drawBackground();
   
-  if(_frameCount < _lineCount) {
+  if(_frameCount < _lineCount) 
+  {
     _end = (_frameCount++ * _skip) + _skip;
     _year = 0;
+  }
+  else
+  {
+    _endPauseFrameCount++;
   };
-  
   
   for(int c = 2; c < _end; c++)
   {
@@ -164,6 +169,12 @@ void draw(){
   text(_year, 460, 510);
   _drawLine = false;
   videoExport.saveFrame();
+  
+  if(_endPauseFrameCount > 210)
+  {
+    videoExport.endMovie();
+    exit();
+  }
 }
 
 void keyPressed() {
