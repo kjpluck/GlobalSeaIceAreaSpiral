@@ -77,9 +77,8 @@ void drawBackground()
   text("Arctic", 600, 400);
   text("Antarctic", 300, 600);
   
-  textSize(20);
-  text("Global Sea Ice Area 1978 - 2017", 10, 30);
-  text("@kevpluck", 10, 60);
+  textSize(30);
+  text("Global Sea Ice Area\n1978 - 2017\n@kevpluck", 10, 40);
   textSize(10);
   text("Sea Ice Concentrations from Nimbus-7 SMMR and DMSP SSM/I-SSMIS Passive Microwave Data (NSIDC-0051), Near-Real-Time DMSP SSMIS Daily Polar Gridded Sea Ice Concentrations", 10, _height - 12);
   
@@ -93,8 +92,7 @@ int _end = 0;
 int _year = 0;
 float _angleOfRecord = 0.0;
 int _endPauseFrameCount = 0;
-void draw(){
-   //<>//
+void draw(){ //<>//
   drawBackground();
   
   if(_frameCount < _lineCount) {
