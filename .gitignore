@@ -3,4 +3,5 @@ ffmpeg.txt
 *.png
 *.gif
 nsidc*nrt.txt
-
+*.zip
+*.dat
