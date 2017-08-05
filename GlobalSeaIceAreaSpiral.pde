@@ -1,9 +1,10 @@
-
+import java.time.*;
 import com.hamoid.*;
 
 VideoExport videoExport;
 
 StringList _seaIceData;
+StringDict _tempData = new StringDict();
 int _frameCount = 0;
 int _lineCount = 0;
 PFont _font;
@@ -27,11 +28,14 @@ int _skip = 10;
 float _currentLow = Float.MAX_VALUE;
 
 
+color _coolColor = color(0, 0,255);
+color _warmColor = color(255,0,0);
 
 
 void setup() { //<>//
 	size(1000, 1000);
   strokeWeight(4);
+  loadTempData();
   
   frameRate(30);
     
@@ -147,8 +151,11 @@ void draw(){ //<>//
     
     if(_drawLine)
     {
+      
+      float temp = getTempData(_year, yearDay);
+      color lerpColor = lerpColor(_coolColor, _warmColor, (temp+0.09)/(1.32+0.09));
       float lerp = float(_year-1978)/float(2016-1978);
-      stroke(lerpColor(purple, red, lerp));
+      stroke(lerpColor);
       drawGlobal(x,y);
       
       stroke(255,255,255,16);
@@ -262,6 +269,39 @@ StringList filterFile()
 	}
 
 	return toReturn;
+}
+
+public static LocalDate GetNonLeapYear()
+{
+  return LocalDate.of(2001,1,1);
+}
+
+public float getTempData(int year, int dayOfYear)
+{
+  if(dayOfYear>365) dayOfYear = 365;
+  LocalDate dt = GetNonLeapYear().withDayOfYear(dayOfYear);
+  int month = dt.getMonthValue();
+  if(year==2017 && month > 6) month = 6;
+  if(year>=2018) return 0.0;
+  return parseFloat(_tempData.get(year + "/" + month));
+}
+
+void loadTempData()
+{
+  String[] lines = loadStrings("GLB.Ts+dSST.csv");
+  
+  for (String line : lines) {
+    if(line.charAt(0) == 'L' || line.charAt(0) == 'Y') continue;
+    
+    String[] values = split(line, ',');
+    String year = values[0];
+    for(int month = 1;month<=12;month++)
+    {
+      _tempData.set(year + "/" +month, values[month]);
+    }
+    
+    
+  }
 }
 
 void makeClock(){
