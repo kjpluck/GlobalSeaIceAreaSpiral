@@ -89,6 +89,21 @@ void drawBackground()
   textSize(32);
   makeClock();
   
+  pushStyle();
+    textAlign(RIGHT);
+    textSize(15);
+    text("Global temperature anomaly\n(NASA GISS)", width-90,20);
+    //text("-0.09", width-25, 210);
+    text(" 0.0°C", width-15, 210-200*(0.00+0.09)/(1.34+0.09));
+    text(" 0.5°C", width-15, 210-200*(0.50+0.09)/(1.34+0.09));
+    text(" 1.0°C", width-15, 210-200*(1.00+0.09)/(1.34+0.09));
+  popStyle();
+  for(int i=0; i < 200; i++){
+    color lerpColor = lerpColor(_coolColor, _warmColor, ((float)i)/200);
+    stroke(lerpColor);
+    line(width-80, 210-i, width-60, 210-i);
+  }
+  
 }
 
   
@@ -153,8 +168,8 @@ void draw(){ //<>//
     {
       
       float temp = getTempData(_year, yearDay);
-      color lerpColor = lerpColor(_coolColor, _warmColor, (temp+0.09)/(1.32+0.09));
-      float lerp = float(_year-1978)/float(2016-1978);
+      color lerpColor = lerpColor(_coolColor, _warmColor, (temp+0.09)/(1.34+0.09));
+            
       stroke(lerpColor);
       drawGlobal(x,y);
       
