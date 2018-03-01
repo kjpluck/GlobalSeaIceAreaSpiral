@@ -82,7 +82,7 @@ void drawBackground()
   text("Antarctic", 300, 600);
   
   textSize(30);
-  text("Global Sea Ice Area\n1978 - 2017\n@kevpluck", 10, 40);
+  text("Global Sea Ice Area\n1978 - 2018\n@kevpluck", 10, 40);
   textSize(10);
   text("Sea Ice Concentrations from Nimbus-7 SMMR and DMSP SSM/I-SSMIS Passive Microwave Data (NSIDC-0051), Near-Real-Time DMSP SSMIS Daily Polar Gridded Sea Ice Concentrations", 10, _height - 12);
   
@@ -110,6 +110,7 @@ void drawBackground()
 int _end = 0;
 int _year = 0;
 float _angleOfRecord = 0.0;
+int _yearOfRecord = 1979;
 int _endPauseFrameCount = 0;
 void draw(){ //<>//
   drawBackground();
@@ -202,6 +203,7 @@ void draw(){ //<>//
     {
       _currentLow = area;
       _angleOfRecord = TWO_PI *  yearDay/daysInYear;
+      _yearOfRecord = _year;
       if(yearDay > 30 && yearDay < 180)
       {        
         _drawRecordLow = true;
@@ -212,21 +214,24 @@ void draw(){ //<>//
   
   if(_drawRecordLow)
   {
-    noFill();
-    stroke(90,0,90);
-    strokeWeight(4);
-    //ellipse(_halfWidth, _halfHeight, 17.7 * _currentLow * 2, 17.7 * _currentLow * 2);
-    fill(255);
-    textSize(15);
-    
-    translate(_halfWidth, _halfHeight);
-    rotate(_angleOfRecord);
-    stroke(255);
-    line(0, - 16 * _currentLow - 15, 0, - 16 * _currentLow - 25);
-    text(String.format("%.1fM Km²", _currentLow), -30 , - 16 * _currentLow);
-    rotate(-_angleOfRecord);
+    pushStyle();
+      textAlign(CENTER);
+      noFill();
+      stroke(90,0,90);
+      strokeWeight(4);
+      //ellipse(_halfWidth, _halfHeight, 17.7 * _currentLow * 2, 17.7 * _currentLow * 2);
+      fill(255);
+      textSize(15);
       
-    translate(-_halfWidth, -_halfHeight);
+      translate(_halfWidth, _halfHeight);
+      rotate(_angleOfRecord);
+      stroke(255);
+      line(0, - 16 * _currentLow - 15, 0, - 16 * _currentLow - 25);
+      text(String.format("%.1fM Km²\n%d", _currentLow, _yearOfRecord), 0 , - 16 * _currentLow);
+      rotate(-_angleOfRecord);
+        
+      translate(-_halfWidth, -_halfHeight);
+    popStyle();
   }
   
   stroke(255,255,255,48);
@@ -296,8 +301,11 @@ public float getTempData(int year, int dayOfYear)
   if(dayOfYear>365) dayOfYear = 365;
   LocalDate dt = GetNonLeapYear().withDayOfYear(dayOfYear);
   int month = dt.getMonthValue();
-  if(year==2017 && month > 6) month = 6;
-  if(year>=2018) return 0.0;
+  if(year>=2018) 
+  {
+    year = 2017;
+    month = 12;
+  }
   return parseFloat(_tempData.get(year + "/" + month));
 }
 
