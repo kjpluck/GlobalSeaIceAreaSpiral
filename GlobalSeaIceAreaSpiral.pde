@@ -73,6 +73,7 @@ void drawBackground()
 int _end = 0;
 int _year = 0;
 float _angleOfRecord = 0.0;
+int _yearOfRecord = 1979;
 int _endPauseFrameCount = 0;
 void draw(){
   
@@ -136,6 +137,7 @@ void draw(){
     {
       _currentLow = area;
       _angleOfRecord = TWO_PI *  yearDay/daysInYear;
+      _yearOfRecord = _year;
       if(yearDay > 30 && yearDay < 180)
       {        
         _drawRecordLow = true;
@@ -145,21 +147,24 @@ void draw(){
     
   if(_drawRecordLow)
   {
-    noFill();
-    stroke(90,0,90);
-    strokeWeight(4);
-    //ellipse(_halfWidth, _halfHeight, 17.7 * _currentLow * 2, 17.7 * _currentLow * 2);
-    fill(255);
-    textSize(15);
-    
-    translate(_halfWidth, _halfHeight);
-    rotate(_angleOfRecord);
-    stroke(255);
-    line(0, - 16 * _currentLow - 15, 0, - 16 * _currentLow - 25);
-    text(String.format("%.1fM Km²", _currentLow), -30 , - 16 * _currentLow);
-    rotate(-_angleOfRecord);
+    pushStyle();
+      textAlign(CENTER);
+      noFill();
+      stroke(90,0,90);
+      strokeWeight(4);
+      //ellipse(_halfWidth, _halfHeight, 17.7 * _currentLow * 2, 17.7 * _currentLow * 2);
+      fill(255);
+      textSize(15);
       
-    translate(-_halfWidth, -_halfHeight);
+      translate(_halfWidth, _halfHeight);
+      rotate(_angleOfRecord);
+      stroke(255);
+      line(0, - 16 * _currentLow - 15, 0, - 16 * _currentLow - 25);
+      text(String.format("%.1fM Km²\n%d", _currentLow, _yearOfRecord), 0 , - 16 * _currentLow);
+      rotate(-_angleOfRecord);
+        
+      translate(-_halfWidth, -_halfHeight);
+    popStyle();
   }
   
   textSize(32);
