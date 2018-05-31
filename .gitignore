@@ -6,4 +6,4 @@ nsidc*.txt
 *.zip
 *.csv
 *.dat
-
+*.gz

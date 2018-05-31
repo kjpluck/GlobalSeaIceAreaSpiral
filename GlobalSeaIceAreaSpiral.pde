@@ -81,10 +81,15 @@ void drawBackground()
   text("Arctic", 600, 400);
   text("Antarctic", 300, 600);
   
-  textSize(30);
-  text("Global Sea Ice Area\n1978 - 2018\n@kevpluck", 10, 40);
-  textSize(10);
-  text("Sea Ice Concentrations from Nimbus-7 SMMR and DMSP SSM/I-SSMIS Passive Microwave Data (NSIDC-0051), Near-Real-Time DMSP SSMIS Daily Polar Gridded Sea Ice Concentrations", 10, _height - 12);
+  pushStyle();
+    textSize(30);
+    text("Global Sea Ice Area\n1978 - 2018", 10, 40);
+    text("@kevpluck", 10, height-65);
+    textSize(20);
+    text("PixelMoversAndMakers.com", 10, height - 35);
+    textSize(10);
+    text("Sea Ice Concentrations from Nimbus-7 SMMR and DMSP SSM/I-SSMIS Passive Microwave Data (NSIDC-0051), Near-Real-Time DMSP SSMIS Daily Polar Gridded Sea Ice Concentrations", 10, _height - 12);
+  popStyle();
   
   textSize(32);
   makeClock();
