@@ -84,11 +84,13 @@ void drawBackground()
   pushStyle();
     textSize(30);
     text("Global Sea Ice Area\n1978 - 2018", 10, 40);
-    text("@kevpluck", 10, height-65);
+    textAlign(RIGHT);
+    text("@kevpluck", width-15, height-65);
     textSize(20);
-    text("PixelMoversAndMakers.com", 10, height - 35);
-    textSize(10);
-    text("Sea Ice Concentrations from Nimbus-7 SMMR and DMSP SSM/I-SSMIS Passive Microwave Data (NSIDC-0051), Near-Real-Time DMSP SSMIS Daily Polar Gridded Sea Ice Concentrations", 10, _height - 12);
+    text("PixelMoversAndMakers.com", width-15, height - 35);
+    textAlign(CENTER);
+    textSize(11);
+    text("Sea Ice Concentrations from Nimbus-7 SMMR and DMSP SSM/I-SSMIS Passive Microwave Data (NSIDC-0051), Near-Real-Time DMSP SSMIS Daily Polar Gridded Sea Ice Concentrations", width/2, _height - 12);
   popStyle();
   
   textSize(32);
