@@ -127,7 +127,14 @@ void draw(){
     if(_drawLine)
     {
       float lerp = float(_year-1978)/float(2016-1978);
-      stroke(lerpColor(purple, red, lerp));
+      color lineColour = lerpColor(purple, red, lerp);
+      
+      int fromEnd = _end - c;
+      
+      if(fromEnd <= 40)
+        lineColour = lerpColor(lineColour, purple, 1.0 - fromEnd/40.0);
+        
+      stroke(lineColour);
       strokeWeight(4);
       line(500 + _lastX, 500 + _lastY, 500 + x, 500 + y);
     }
