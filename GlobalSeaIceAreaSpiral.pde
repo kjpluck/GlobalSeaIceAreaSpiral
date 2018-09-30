@@ -8,7 +8,7 @@ int _frameCount = 0;
 int _lineCount = 0;
 PFont _font;
 color purple = color(127, 0, 127);
-color red = color(255, 255, 0);
+color yellow = color(255, 255, 0);
 int _width = 1000;
 int _height = 1000;
 int _halfWidth = _width/2;
@@ -147,24 +147,24 @@ void draw(){ //<>//
     
     if(_drawLine)
     {
-      float lerp = float(_year-1978)/float(2016-1978);
-      stroke(lerpColor(purple, red, lerp));
-      drawGlobal(x,y);
-      
-      stroke(255,255,255,16);
-      drawNH(xNH,yNH);
-      drawSH(xSH,ySH);
+      float lerp = float(_year-1978)/float(2018-1978);
+      color globalColour = lerpColor(purple, yellow, lerp); 
+      color poleColour = color(255,255,255,16); 
       
       int distanceFromEnd = _end - c;
-      if(distanceFromEnd < 25)
+      if(distanceFromEnd < 40)
       {  
-        for(int count = 0; count < (25 - distanceFromEnd); count++)
-        {
-          drawGlobal(x,y);
-          drawNH(xNH,yNH);
-          drawSH(xSH,ySH);
-        }
-      } //<>//
+        float cometLerp = 1 - distanceFromEnd / 40.0;
+        poleColour = lerpColor(color(255,255,255,16), color(255,255,255,255), cometLerp);
+        globalColour = lerpColor(globalColour, lerpColor(purple, yellow, 1.0-lerp), cometLerp);
+      }
+      
+      stroke(globalColour);
+      drawGlobal(x,y);
+      
+      stroke(poleColour);
+      drawNH(xNH,yNH);
+      drawSH(xSH,ySH); //<>//
     }
     
     _lastX = x;

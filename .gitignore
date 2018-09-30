@@ -5,3 +5,5 @@ ffmpeg.txt
 nsidc*.txt
 *.zip
 *.csv
+*.gz
+*.dat
