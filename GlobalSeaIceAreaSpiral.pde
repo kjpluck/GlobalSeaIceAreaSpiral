@@ -28,8 +28,8 @@ int _skip = 10;
 float _currentLow = Float.MAX_VALUE;
 
 
-color _coolColor = color(0, 0,255);
-color _warmColor = color(255,0,0);
+color _coolColor = color(36, 36,223);
+color _warmColor = color(224,36,94);
 
 
 void setup() { //<>//
@@ -49,7 +49,7 @@ void setup() { //<>//
 
 void drawBackground()
 {
-  background(100);
+  background(21,32,43);
   
   
   strokeCap(SQUARE);
@@ -83,7 +83,7 @@ void drawBackground()
   
   pushStyle();
     textSize(30);
-    text("Global Sea Ice Area\n1978 - 2018", 10, 40);
+    text("Global Sea Ice Area\n1978 - 2019", 10, 40);
     textAlign(RIGHT);
     text("@kevpluck", width-15, height-65);
     textSize(20);
