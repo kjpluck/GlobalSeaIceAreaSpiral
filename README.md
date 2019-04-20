@@ -3,6 +3,8 @@
 ## Dependencies
 
 * Processing (https://processing.org/download/)
+* Hamoid Video Export Processing (https://github.com/hamoid/video_export_processing)
+* ffmpeg (http://ffmpeg.org/)
 
 ## Method
 
